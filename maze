@@ -1,0 +1,79 @@
+# grid for maze, 2 starting point, 1 wall, 0 open space, 9 cheese
+maze <- c(0,2,1,
+          0,0,0,
+          1,1,9)
+
+#starting point for maze
+start <- match(2,maze)
+loc <- start
+solved <- FALSE
+start <- coords(maze,start)
+cat("Starting coords are ", start)
+
+while(!FALSE){
+  loc <- check(maze,loc)
+  cat("loc equal to ", loc,"\n")
+}
+
+check <- function(maze, pos){
+  if(maze[pos]==9){
+    stop("Winner winner :)")
+  }
+  if(maze[pos+3] != 1){ # check south first 
+    cat("Went South: oords are now ", coords(maze, pos+3),"\n")
+    loc <- pos + 3
+    return(loc)
+  }else{
+    cat("wall below us\n")
+  }
+  if (maze[pos+1] != 1){  # check east
+    cat("Went east: Coords are now ", coords(maze, pos+1),"\n")
+    loc <- pos + 1
+    return(loc)
+  }else{
+    cat("wall to our east\n ")
+    
+  }
+  if (pos >=2 && maze[pos-1] != 1){ #check west
+    cat("Went west: Coords are now ", coords(maze, pos-1),"\n")
+    loc <- pos -1
+    return(loc)
+  }else{
+      cat("Wall in the way\n")
+    
+  }
+  if(pos > 3 && maze[pos-3] !=1){
+    cat("Went North: Coords are now ", coords(maze, pos-3),"\n")
+    loc <- pos - 3
+    return(loc)
+  }else{
+    cat("wall in the way\n")
+    
+  }
+  solved <- TRUE
+}
+
+coords <- function(maze, index){
+  if(length(maze) %%9 != 0){
+   stop("Must be a 3x3 maze") 
+  }
+  
+  if(index==1 || index== 4 || index == 7){
+    x <- 0
+  }else if (index == 2 || index == 5 || index ==8){
+    x <- 1
+  }else{
+    x <- 2
+  }
+  
+  if (index == 1 || index == 2|| index == 3){
+    y <- 0
+  }else if(index == 4|| index == 5 || index == 6){
+    y <- 1
+  }else{
+    y <- 2
+  }
+  crd <- c(x,y)
+  return(crd)
+  
+}
